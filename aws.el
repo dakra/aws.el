@@ -83,6 +83,9 @@ JSON is read from PROC output."
 (defun aws-set-session-token (token-code)
   "Set AWS credentials reading TOKEN-CODE."
   (interactive (list (read-passwd "Token Code: ")))
+  (setenv "AWS_ACCESS_KEY_ID" nil)
+  (setenv "AWS_SECRET_ACCESS_KEY" nil)
+  (setenv "AWS_SESSION_TOKEN" nil)
   (async-start-process "aws sts get-session-token" aws-exec #'aws-finish-func
                        "sts" "get-session-token"
                        "--duration-seconds" (format "%s" aws-duration)
